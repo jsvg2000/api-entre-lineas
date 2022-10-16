@@ -1,35 +1,16 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
-const pool = require('../libs/postgres.pool');
+const sequelize = require('../libs/sequelize');
 
 class UsersService {
 
   constructor(){
     this.users = [];
     this.generate();
-    this.pool = pool;
-    this.pool.on('error', (err)=>
-      console.error(err)
-    );
   }
 
 generate() {
     var users = [];
-    /*dbData.query('SELECT * FROM usuarios', function(error,resultados){
-      if(error)
-      throw error;
-      resultados.forEach(resultado => {
-        users.push({
-          dni: resultado.dni,
-          name: resultado.nombre,
-          user_type: resultado.tipo_usuario,
-          mail: resultado.console,
-          password: resultado.contrasea,
-          disable: resultado.inhabilitar,
-        });
-      });
-    })
-    */
     this.users = users
   }
 
@@ -44,8 +25,8 @@ generate() {
 
   async find() {
     const qwery = 'select * from prueba';
-    const rta = await this.pool.query(qwery);
-    return rta.rows;
+    const [data, metadata] = await sequelize.query(qwery);
+    return data;
   }
 
   async findOne(dni) {
