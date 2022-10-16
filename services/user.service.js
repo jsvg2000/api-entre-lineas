@@ -1,19 +1,21 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
-
-const db = require('../database/database');
-const dbData = db.getConnection();
+const pool = require('../libs/postgres.pool');
 
 class UsersService {
 
   constructor(){
     this.users = [];
     this.generate();
+    this.pool = pool;
+    this.pool.on('error', (err)=>
+      console.error(err)
+    );
   }
 
-  generate() {
+generate() {
     var users = [];
-    dbData.query('SELECT * FROM usuarios', function(error,resultados){
+    /*dbData.query('SELECT * FROM usuarios', function(error,resultados){
       if(error)
       throw error;
       resultados.forEach(resultado => {
@@ -27,6 +29,7 @@ class UsersService {
         });
       });
     })
+    */
     this.users = users
   }
 
@@ -40,7 +43,9 @@ class UsersService {
   }
 
   async find() {
-    return this.users;
+    const qwery = 'select * from prueba';
+    const rta = await this.pool.query(qwery);
+    return rta.rows;
   }
 
   async findOne(dni) {
