@@ -16,13 +16,13 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id',
+router.get('/:dni',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
-      const book = await service.findOne(id);
-      res.json(book);
+      const { dni } = req.params;
+      const user = await service.findOne(parseInt(dni));
+      res.json(user);
     } catch (error) {
       next(error);
     }
@@ -34,36 +34,36 @@ router.post('/',
   async (req, res, next) => {
     try {
       const body = req.body;
-      const newbook = await service.create(body);
-      res.status(201).json(newbook);
+      const newUser = await service.create(body);
+      res.status(201).json(newUser);
     } catch (error) {
       next(error);
     }
   }
 );
 
-router.patch('/:id',
+router.patch('/:dni',
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
+      const { dni } = req.params;
       const body = req.body;
-      const book = await service.update(id, body);
-      res.json(book);
+      const user = await service.update(dni, body);
+      res.json(user);
     } catch (error) {
       next(error);
     }
   }
 );
 
-router.delete('/:id',
+router.delete('/:dni',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
-      await service.delete(id);
-      res.status(201).json({id});
+      const { dni } = req.params;
+      await service.delete(dni);
+      res.status(201).json({dni});
     } catch (error) {
       next(error);
     }

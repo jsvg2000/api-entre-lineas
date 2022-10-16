@@ -1,6 +1,9 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
 
+const db = require('../database/database');
+const dbData = db.getConnection();
+
 class UsersService {
 
   constructor(){
@@ -9,19 +12,27 @@ class UsersService {
   }
 
   generate() {
-    const limit = 100;
-    for (let index = 0; index < limit; index++) {
-      this.users.push({
-        id: faker.datatype.uuid(),
-        name: faker.commerce.productName(),
-        isBlock: faker.datatype.boolean(),
+    var users = [];
+    dbData.query('SELECT * FROM usuarios', function(error,resultados){
+      if(error)
+      throw error;
+      resultados.forEach(resultado => {
+        users.push({
+          dni: resultado.dni,
+          name: resultado.nombre,
+          user_type: resultado.tipo_usuario,
+          mail: resultado.console,
+          password: resultado.contrasea,
+          disable: resultado.inhabilitar,
+        });
       });
-    }
+    })
+    this.users = users
   }
 
   async create(data) {
     const newUser = {
-      id: faker.datatype.uuid(),
+      dni: faker.datatype.uuid(),
       ...data
     }
     this.users.push(newUser);
@@ -32,19 +43,19 @@ class UsersService {
     return this.users;
   }
 
-  async findOne(id) {
-    const user = this.users.find(item => item.id === id);
+  async findOne(dni) {
+    const user = this.users.find(item => item.dni === dni);
     if (!user) {
       throw boom.notFound('user not found');
     }
-    if (user.isBlock) {
-      throw boom.conflict('user is block');
+    if (user.disable) {
+      throw boom.conflict('user is disable');
     }
     return user;
   }
 
-  async update(id, changes) {
-    const index = this.users.findIndex(item => item.id === id);
+  async update(dni, changes) {
+    const index = this.users.findIndex(item => item.dni === dni);
     if (index === -1) {
       throw boom.notFound('user not found');
     }
@@ -56,13 +67,13 @@ class UsersService {
     return this.users[index];
   }
 
-  async delete(id) {
-    const index = this.users.findIndex(item => item.id === id);
+  async delete(dni) {
+    const index = this.users.findIndex(item => item.dni === dni);
     if (index === -1) {
       throw boom.notFound('user not found');
     }
     this.users.splice(index, 1);
-    return { id };
+    return { dni };
   }
 
 }
