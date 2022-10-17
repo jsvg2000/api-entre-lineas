@@ -1,11 +1,11 @@
 const express = require('express');
 
-const BooksService = require('./../services/book.service');
+const BookService = require('./../services/book.service');
 const validatorHandler = require('./../middlewares/validator.handler');
 const { createBookSchema, updateBookSchema, getBookSchema } = require('./../schemas/book.schema');
 
 const router = express.Router();
-const service = new BooksService();
+const service = new BookService();
 
 router.get('/', async (req, res, next) => {
   try {
@@ -16,12 +16,12 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id',
+router.get('/:issn',
   validatorHandler(getBookSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
-      const book = await service.findOne(id);
+      const { issn } = req.params;
+      const book = await service.findOne(issn);
       res.json(book);
     } catch (error) {
       next(error);
@@ -34,6 +34,7 @@ router.post('/',
   async (req, res, next) => {
     try {
       const body = req.body;
+      console.log(body);
       const newbook = await service.create(body);
       res.status(201).json(newbook);
     } catch (error) {
@@ -42,14 +43,14 @@ router.post('/',
   }
 );
 
-router.patch('/:id',
+router.patch('/:issn',
   validatorHandler(getBookSchema, 'params'),
   validatorHandler(updateBookSchema, 'body'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
+      const { issn } = req.params;
       const body = req.body;
-      const book = await service.update(id, body);
+      const book = await service.update(issn, body);
       res.json(book);
     } catch (error) {
       next(error);
@@ -57,13 +58,13 @@ router.patch('/:id',
   }
 );
 
-router.delete('/:id',
+router.delete('/:issn',
   validatorHandler(getBookSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { id } = req.params;
-      await service.delete(id);
-      res.status(201).json({id});
+      const { issn } = req.params;
+      await service.delete(issn);
+      res.status(201).json({issn});
     } catch (error) {
       next(error);
     }

@@ -1,72 +1,42 @@
-const faker = require('faker');
 const boom = require('@hapi/boom');
+const { models} = require('./../libs/sequelize');
 
-class BooksService {
+class BookService {
 
-  constructor(){
-    this.books = [];
-    this.generate();
-  }
-
-  generate() {
-    const limit = 100;
-    for (let index = 0; index < limit; index++) {
-      this.books.push({
-        id: faker.datatype.uuid(),
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.imageUrl(),
-        isBlock: faker.datatype.boolean(),
-      });
-    }
-  }
+  constructor(){}
 
   async create(data) {
-    const newBook = {
-      id: faker.datatype.uuid(),
-      ...data
-    }
-    this.books.push(newBook);
+    const newBook = await models.Book.create(data);
     return newBook;
   }
 
   async find() {
-    return this.books;
+    const rta = await models.Book.findAll();
+    return rta;
   }
 
-  async findOne(id) {
-    const book = this.books.find(item => item.id === id);
-    if (!book) {
-      throw boom.notFound('book not found');
-    }
-    if (book.isBlock) {
-      throw boom.conflict('book is block');
+  async findOne(issn) {
+    const book = await models.Book.findByPk(issn);
+    if(!book){
+      throw boom.notFound('Book not found');
     }
     return book;
+
   }
 
-  async update(id, changes) {
-    const index = this.books.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('book not found');
-    }
-    const book = this.books[index];
-    this.books[index] = {
-      ...book,
-      ...changes
-    };
-    return this.books[index];
+  async update(issn, changes) {
+    const book = await this.findOne(issn);
+    const rta = await book.update(changes);
+    return rta;
+
   }
 
-  async delete(id) {
-    const index = this.books.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('book not found');
-    }
-    this.books.splice(index, 1);
-    return { id };
+  async delete(issn) {
+    const book = await this.findOne(issn);
+    await book.destroy();
+    return{issn}
   }
 
 }
 
-module.exports = BooksService;
+module.exports = BookService;
