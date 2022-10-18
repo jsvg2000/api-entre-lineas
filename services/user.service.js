@@ -1,6 +1,6 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
-const sequelize = require('../libs/sequelize');
+const { models } = require('./../libs/sequelize');
 
 class UsersService {
 
@@ -24,9 +24,8 @@ generate() {
   }
 
   async find() {
-    const qwery = 'select * from prueba';
-    const [data, metadata] = await sequelize.query(qwery);
-    return data;
+    const rta = await models.User.findAll();
+    return rta;
   }
 
   async findOne(dni) {
