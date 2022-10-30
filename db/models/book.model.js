@@ -6,8 +6,9 @@ const BookSchema = {
   issn:{
     allowNull: false,
     autoIncrement: false,
-    primarykey: true,
-    type: DataTypes.STRING(20)
+    type: DataTypes.STRING(20),
+    primaryKey: true,
+    unique:'compositeIndex'
   },
   titulo:{
     allowNull: false,
@@ -66,6 +67,11 @@ const BookSchema = {
     autoIncrement: false,
     type: DataTypes.TEXT
   },
+  habilitado:{
+    allowNull:true,
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  }
 }
 
 class Book extends Model{

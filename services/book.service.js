@@ -3,7 +3,8 @@ const { models} = require('./../libs/sequelize');
 
 class BookService {
 
-  constructor(){}
+  constructor(){
+  }
 
   async create(data) {
     const newBook = await models.Book.create(data);
