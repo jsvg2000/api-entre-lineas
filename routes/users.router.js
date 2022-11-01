@@ -16,12 +16,12 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:dni',
+router.get('/:usuario',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { dni } = req.params;
-      const user = await service.findOne(parseInt(dni));
+      const { usuario } = req.params;
+      const user = await service.findOne(usuario);
       res.json(user);
     } catch (error) {
       next(error);
@@ -42,14 +42,14 @@ router.post('/',
   }
 );
 
-router.patch('/:dni',
+router.patch('/:usuario',
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
     try {
-      const { dni } = req.params;
+      const { usuario } = req.params;
       const body = req.body;
-      const user = await service.update(dni, body);
+      const user = await service.update(usuario, body);
       res.json(user);
     } catch (error) {
       next(error);
@@ -57,13 +57,13 @@ router.patch('/:dni',
   }
 );
 
-router.delete('/:dni',
+router.delete('/:usuario',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { dni } = req.params;
-      await service.delete(dni);
-      res.status(201).json({dni});
+      const { usuario } = req.params;
+      await service.delete(usuario);
+      res.status(201).json({usuario});
     } catch (error) {
       next(error);
     }

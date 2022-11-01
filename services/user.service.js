@@ -1,36 +1,24 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
-const sequelize = require('../libs/sequelize');
+const { models } = require('./../libs/sequelize');
 
 class UsersService {
 
   constructor(){
-    this.users = [];
-    this.generate();
-  }
-
-generate() {
-    var users = [];
-    this.users = users
   }
 
   async create(data) {
-    const newUser = {
-      dni: faker.datatype.uuid(),
-      ...data
-    }
-    this.users.push(newUser);
+    const newUser = await models.User.create(data);
     return newUser;
   }
 
   async find() {
-    const qwery = 'select * from prueba';
-    const [data, metadata] = await sequelize.query(qwery);
-    return data;
+    const rta = await models.User.findAll();
+    return rta;
   }
 
-  async findOne(dni) {
-    const user = this.users.find(item => item.dni === dni);
+  async findOne(usuario) {
+    const user =  await models.User.findByPk(usuario);
     if (!user) {
       throw boom.notFound('user not found');
     }
@@ -40,9 +28,11 @@ generate() {
     return user;
   }
 
-  async update(dni, changes) {
-    const index = this.users.findIndex(item => item.dni === dni);
-    if (index === -1) {
+  async update(usuario, changes) {
+    const user = await models.User.findByPk(usuario);
+    const rta = await user.update(changes);
+    return rta;
+    /*if (user === -1) {
       throw boom.notFound('user not found');
     }
     const user = this.users[index];
@@ -50,7 +40,7 @@ generate() {
       ...user,
       ...changes
     };
-    return this.users[index];
+    return this.users[index];*/
   }
 
   async delete(dni) {
