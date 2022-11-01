@@ -1,5 +1,5 @@
 const {BookSchema,Book} = require('./book.model');
-const {User, UserSchema} = require('./user.model');
+const {UserSchema,User} = require('./user.model');
 
 function setupModels(sequelize){
   Book.init(BookSchema, Book.config(sequelize));
