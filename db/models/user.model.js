@@ -20,6 +20,10 @@ const UserSchema = {
     allowNull: true,
     type: DataTypes.STRING,
   },
+  genero: {
+    allowNull: true,
+    type: DataTypes.STRING,
+  },
   fechaNacimiento: {
     allowNull: true,
     type: DataTypes.DATE,
