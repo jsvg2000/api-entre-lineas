@@ -4,6 +4,7 @@ const dni = Joi.number().integer().max();
 const tipoUsuario = Joi.number().integer();
 const nombre = Joi.string();
 const apellidos = Joi.string();
+const genero = Joi.string();
 const fechaNacimiento = Joi.date();
 const pais = Joi.string();
 const departamento = Joi.string();
@@ -23,6 +24,7 @@ const createUserSchema = Joi.object({
   tipoUsuario: tipoUsuario.required(),
   nombre: nombre,
   apellidos: apellidos,
+  genero: genero,
   fechaNacimiento: fechaNacimiento,
   pais: pais,
   departamento: departamento,
@@ -42,6 +44,7 @@ const updateUserSchema = Joi.object({
   tipoUsuario: tipoUsuario,
   nombre: nombre,
   apellidos: apellidos,
+  genero: genero,
   fechaNacimiento: fechaNacimiento,
   pais: pais,
   departamento: departamento,
@@ -60,6 +63,7 @@ const getUserSchema = Joi.object({
   tipoUsuario: tipoUsuario,
   nombre: nombre,
   apellidos: apellidos,
+  genero: genero,
   fechaNacimiento: fechaNacimiento,
   pais: pais,
   departamento: departamento,
