@@ -22,14 +22,15 @@ class UsersService {
     if (!user) {
       throw boom.notFound('user not found');
     }
-    if (user.disable) {
+    if (user.inhabilitar) {
       throw boom.conflict('user is disable');
     }
     return user;
   }
 
   async update(usuario, changes) {
-    const user = await models.User.findByPk(usuario);
+    //const user = await models.User.findByPk(usuario);
+    const user = await this.findOne(usuario);
     const rta = await user.update(changes);
     return rta;
     /*if (user === -1) {
