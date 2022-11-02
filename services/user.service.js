@@ -22,7 +22,7 @@ class UsersService {
     if (!user) {
       throw boom.notFound('user not found');
     }
-    if (user.disable) {
+    if (user.inhabilitar) {
       throw boom.conflict('user is disable');
     }
     return user;
