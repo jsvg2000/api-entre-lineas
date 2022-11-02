@@ -13,7 +13,7 @@ const direccion = Joi.string();
 const generoFavorito = Joi.string();
 const correo = Joi.string().email();
 const usuario = Joi.string();
-const contrasena = Joi.string().min(5);
+const contrasena = Joi.string().min(8);
 const suscripcionNoticias = Joi.boolean();
 const inhabilitar = Joi.boolean();
 
