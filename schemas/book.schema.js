@@ -13,6 +13,7 @@ const estado = Joi.allow()
 const precio = Joi.number().min(0);
 const urlImage = Joi.string().min(0);
 const habilitado = Joi.allow();
+const idTienda = Joi.number().integer();
 
 const createBookSchema = Joi.object({
   issn: issn.required(),
@@ -27,7 +28,8 @@ const createBookSchema = Joi.object({
   estado: estado.required(),
   precio: precio.required(),
   urlImage: urlImage.required(),
-  habilitado:habilitado.required()
+  habilitado:habilitado.required(),
+  idTienda:idTienda.required()
 });
 
 const updateBookSchema = Joi.object({
@@ -43,7 +45,8 @@ const updateBookSchema = Joi.object({
   estado: estado,
   precio: precio,
   urlImage: urlImage,
-  habilitado:habilitado
+  habilitado:habilitado,
+  idTienda:idTienda
 });
 
 const getBookSchema = Joi.object({

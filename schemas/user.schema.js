@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const dni = Joi.number().integer().max();
+const dni = Joi.number().integer();
 const tipoUsuario = Joi.number().integer();
 const nombre = Joi.string();
 const apellidos = Joi.string();

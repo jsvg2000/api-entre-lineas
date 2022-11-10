@@ -7,12 +7,15 @@ class BookService {
   }
 
   async create(data) {
+    console.log(data,"fdkfdkfkasjkf");
     const newBook = await models.Book.create(data);
     return newBook;
   }
 
   async find() {
-    const rta = await models.Book.findAll();
+    const rta = await models.Book.findAll({
+      include: ['store']
+    });
     return rta;
   }
 

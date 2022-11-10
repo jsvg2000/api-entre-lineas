@@ -1,5 +1,5 @@
 const {Model, DataTypes,Sequelize} = require('sequelize');
-
+const {STORE_TABLE } = require('./store.model');
 const BOOK_TABLE = 'books';
 
 const BookSchema = {
@@ -7,8 +7,7 @@ const BookSchema = {
     allowNull: false,
     autoIncrement: false,
     type: DataTypes.STRING(20),
-    primaryKey: true,
-    unique:'compositeIndex'
+    primaryKey: true
   },
   titulo:{
     allowNull: false,
@@ -71,13 +70,25 @@ const BookSchema = {
     allowNull:true,
     type: DataTypes.BOOLEAN,
     defaultValue: true
+  },
+  idTienda:{
+    field: 'id_tienda',
+    allowNull: false,
+    type: DataTypes.INTEGER(11),
+    reference:{
+      model: STORE_TABLE,
+      key:'idTienda'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 
 class Book extends Model{
 
-  static associations(){
-
+  static associate(models){
+    this.belongsTo(models.Store,{
+      foreignKey:'idTienda', as: 'store' });
   }
 
   static config(sequelize){
