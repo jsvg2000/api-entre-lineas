@@ -25,7 +25,6 @@ class BookService {
       throw boom.notFound('Book not found');
     }
     return book;
-
   }
 
   async update(issn, changes) {

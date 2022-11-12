@@ -1,19 +1,25 @@
 const express = require('express');
+const passport = require('passport');
 
 const BookService = require('./../services/book.service');
 const validatorHandler = require('./../middlewares/validator.handler');
+const {checkRoles} = require('./../middlewares/auth.handler');
+
 const { createBookSchema, updateBookSchema, getBookSchema } = require('./../schemas/book.schema');
 
 const router = express.Router();
 const service = new BookService();
 
-router.get('/', async (req, res, next) => {
-  try {
-    const books = await service.find();
-    res.json(books);
-  } catch (error) {
-    next(error);
-  }
+router.get('/',
+passport.authenticate('jwt',{session:false}),
+checkRoles(1,2),
+ async (req, res, next) => {
+    try {
+      const books = await service.find();
+      res.json(books);
+    } catch (error) {
+      next(error);
+    }
 });
 
 router.get('/:issn',
@@ -30,6 +36,8 @@ router.get('/:issn',
 );
 
 router.post('/',
+  passport.authenticate('jwt',{session:false}),
+  checkRoles(1,2),
   validatorHandler(createBookSchema, 'body'),
   async (req, res, next) => {
     try {

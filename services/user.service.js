@@ -1,6 +1,5 @@
-const faker = require('faker');
-const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
+const bcrypt = require('bcrypt');
 
 class UsersService {
 
@@ -8,7 +7,12 @@ class UsersService {
   }
 
   async create(data) {
-    const newUser = await models.User.create(data);
+    const hash = await bcrypt.hash(data.contrasena,10);
+    const newUser = await models.User.create({
+      ...data,
+      contrasena:hash
+    });
+    delete newUser.dataValues.contrasena;
     return newUser;
   }
 
@@ -17,42 +21,25 @@ class UsersService {
     return rta;
   }
 
-  async findOne(usuario) {
-    const user =  await models.User.findByPk(usuario);
-    if (!user) {
-      throw boom.notFound('user not found');
+  async findOne(dni) {
+    const usuario = await models.User.findByPk(dni);
+    if(!usuario){
+      throw boom.notFound('User not found');
     }
-    if (user.inhabilitar) {
-      throw boom.conflict('user is disable');
-    }
-    return user;
+    return usuario;
   }
 
   async update(usuario, changes) {
-    //const user = await models.User.findByPk(usuario);
     const user = await this.findOne(usuario);
     const rta = await user.update(changes);
     return rta;
-    /*if (user === -1) {
-      throw boom.notFound('user not found');
-    }
-    const user = this.users[index];
-    this.users[index] = {
-      ...user,
-      ...changes
-    };
-    return this.users[index];*/
   }
 
   async delete(dni) {
-    const index = this.users.findIndex(item => item.dni === dni);
-    if (index === -1) {
-      throw boom.notFound('user not found');
-    }
-    this.users.splice(index, 1);
-    return { dni };
+    const user = await this.findOne(dni);
+    await user.destroy();
+    return{dni}
   }
-
 }
 
 module.exports = UsersService;

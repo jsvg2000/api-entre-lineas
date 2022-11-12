@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
+const {checkApiKey } = require('./middlewares/auth.handler');
 
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler');
 
@@ -10,6 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 const whitelist = ['http://localhost:5173', 'https://myapp.co'];
+
 const options = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {
@@ -21,10 +23,7 @@ const options = {
 }
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Hola mi server en express');
-});
-
+require('./utils/auth');
 
 routerApi(app);
 
