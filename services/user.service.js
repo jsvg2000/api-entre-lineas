@@ -21,8 +21,8 @@ class UsersService {
     return rta;
   }
 
-  async findOne(dni) {
-    const usuario = await models.User.findByPk(dni);
+  async findOne(user) {
+    const usuario = await models.User.findByPk(user);
     if(!usuario){
       throw boom.notFound('User not found');
     }

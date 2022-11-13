@@ -26,7 +26,7 @@ class TypeUser extends Model{
   static config(sequelize){
     return{
       sequelize,
-      tableName: TIPOUSUARIO_TABLE,
+      tableName: TYPEUSER_TABLE,
       modelName: 'TypeUser',
       timestamps: false
     }

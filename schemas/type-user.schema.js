@@ -1,20 +1,20 @@
 const Joi = require('joi');
 
-const idTipoUsuario =Joi.number().min(0).max(9999);
-const tipoUsuario =Joi.string().min(0).max(50);
+const idTipoUsuario =Joi.number().min(0).max(4);
+const tipoUsuario =Joi.string().min(2).max(20);
 
-const createStoreSchema = Joi.object({
+const createTypeUserSchema = Joi.object({
   idTipoUsuario: idTipoUsuario.required(),
   tipoUsuario: tipoUsuario.required()
 });
 
-const updateStoreSchema = Joi.object({
+const updateTypeUserSchema = Joi.object({
   idTipoUsuario: idTipoUsuario,
   tipoUsuario: tipoUsuario
 });
 
-const getStoreSchema = Joi.object({
+const getTypeUserSchema = Joi.object({
   idTipoUsuario: idTipoUsuario.required(),
 });
 
-module.exports = { createStoreSchema, updateStoreSchema, getStoreSchema }
+module.exports = { createTypeUserSchema, updateTypeUserSchema, getTypeUserSchema }

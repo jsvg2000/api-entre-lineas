@@ -1,67 +1,82 @@
 const {Model, DataTypes, Sequelize} = require('sequelize');
+const {TYPEUSER_TABLE } = require('./type-user.models');
 
 const USER_TABLE = 'users';
 
 const UserSchema = {
   dni: {
     allowNull: true,
-    type: DataTypes.INTEGER,
-  },
-  tipoUsuario: {
-    allowNull: false,
-    type: DataTypes.INTEGER,
-    field: 'tipo_usuario',
+    type: DataTypes.BIGINT(10),
+    unique:true
   },
   nombre: {
     allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(50),
   },
   apellidos: {
     allowNull: true,
-    type: DataTypes.STRING,
-  },
-  genero: {
-    allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(50),
   },
   fechaNacimiento: {
     allowNull: true,
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     field: 'fecha_nacimiento',
   },
-  pais: {
+  tipoDocumento: {
     allowNull: true,
-    type: DataTypes.STRING,
-  },
-  departamento: {
-    allowNull: true,
-    type: DataTypes.STRING,
-  },
-  ciudad: {
-    allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(50),
+    field: 'tipo_documento',
   },
   direccion: {
     allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(50),
   },
-  generoFavorito: {
+  pais: {
     allowNull: true,
-    type: DataTypes.STRING,
-    field: 'genero_favorito',
+    type: DataTypes.STRING(50),
+  },
+  departamento: {
+    allowNull: true,
+    type: DataTypes.STRING(50),
+  },
+  ciudad: {
+    allowNull: true,
+    type: DataTypes.STRING(50),
+  },
+  genero:{
+    allowNull: true,
+    type: DataTypes.STRING(20),
   },
   correo: {
     allowNull: true,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(50),
+    unique:true
   },
   usuario: {
     allowNull: false,
     primaryKey: true,
-    type: DataTypes.STRING,
+    unique:true,
+    type: DataTypes.STRING(20),
   },
   contrasena: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(20),
+  },
+  temasPreferencia: {
+    field: 'temas_preferencia',
+    allowNull: true,
+    type: DataTypes.TEXT,
+  },
+  idTipoUsuario:{
+    field: 'id_tipo_usuario',
+    allowNull: false,
+    type: DataTypes.INTEGER(11),
+    reference:{
+      model: TYPEUSER_TABLE,
+      key:'idTipoUsuario'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
   suscripcionNoticias: {
     allowNull: false,
@@ -76,7 +91,8 @@ const UserSchema = {
 
 class User extends Model {
   static associate() {
-    // associate
+    this.belongsTo(models.TypeUser,{
+      foreignKey:'idTipoUser', as: 'typeStore' });
   }
 
   static config(sequelize) {

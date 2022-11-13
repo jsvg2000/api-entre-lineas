@@ -1,19 +1,20 @@
 const Joi = require('joi');
 
-const dni = Joi.number().integer();
-const tipoUsuario = Joi.number().integer();
-const nombre = Joi.string();
-const apellidos = Joi.string();
-const genero = Joi.string();
+const dni = Joi.number().integer().min(0).max(10);
+const nombre = Joi.string().max(50);
+const apellidos = Joi.string().max(50);
 const fechaNacimiento = Joi.date();
-const pais = Joi.string();
-const departamento = Joi.string();
-const ciudad = Joi.string();
-const direccion = Joi.string();
-const generoFavorito = Joi.string();
+const tipoDocumento = Joi.string().max(50);
+const direccion = Joi.string().max(50);
+const pais = Joi.string().max(50);
+const departamento = Joi.string().max(50);
+const ciudad = Joi.string().max(50);
+const genero = Joi.string();
 const correo = Joi.string().email();
 const usuario = Joi.string();
 const contrasena = Joi.string().min(8);
+const temasPreferencia = Joi.string();
+const idTipoUsuario = Joi.number().integer();
 const suscripcionNoticias = Joi.boolean();
 const inhabilitar = Joi.boolean();
 
@@ -21,60 +22,46 @@ const inhabilitar = Joi.boolean();
 
 const createUserSchema = Joi.object({
   dni: dni,
-  tipoUsuario: tipoUsuario.required(),
   nombre: nombre,
   apellidos: apellidos,
-  genero: genero,
   fechaNacimiento: fechaNacimiento,
+  tipoDocumento:tipoDocumento,
+  direccion: direccion,
   pais: pais,
   departamento: departamento,
   ciudad: ciudad,
-  direccion: direccion,
-  generoFavorito: generoFavorito,
+  genero: genero,
   correo: correo,
   usuario: usuario.required(),
   contrasena: contrasena.required(),
+  temasPreferencia:temasPreferencia,
+  idTipoUsuario: idTipoUsuario.required(),
   suscripcionNoticias: suscripcionNoticias.required(),
   inhabilitar: inhabilitar.required()
-  //user_type: user_type.required()
 });
 
 const updateUserSchema = Joi.object({
   dni: dni,
-  tipoUsuario: tipoUsuario,
   nombre: nombre,
   apellidos: apellidos,
-  genero: genero,
   fechaNacimiento: fechaNacimiento,
+  tipoDocumento:tipoDocumento,
+  direccion: direccion,
   pais: pais,
   departamento: departamento,
   ciudad: ciudad,
-  direccion: direccion,
-  generoFavorito: generoFavorito,
-  correo: correo,
-  contrasena: contrasena,
-  suscripcionNoticias: suscripcionNoticias,
-  inhabilitar: inhabilitar
-  //user_type: user_type,
-});
-
-const getUserSchema = Joi.object({
-  dni: dni,
-  tipoUsuario: tipoUsuario,
-  nombre: nombre,
-  apellidos: apellidos,
   genero: genero,
-  fechaNacimiento: fechaNacimiento,
-  pais: pais,
-  departamento: departamento,
-  ciudad: ciudad,
-  direccion: direccion,
-  generoFavorito: generoFavorito,
   correo: correo,
   usuario: usuario,
   contrasena: contrasena,
+  temasPreferencia:temasPreferencia,
+  idTipoUsuario: idTipoUsuario,
   suscripcionNoticias: suscripcionNoticias,
   inhabilitar: inhabilitar
+});
+
+const getUserSchema = Joi.object({
+  dni: dni
 });
 
 module.exports = { createUserSchema, updateUserSchema, getUserSchema }

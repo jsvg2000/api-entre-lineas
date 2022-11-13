@@ -7,7 +7,6 @@ class BookService {
   }
 
   async create(data) {
-    console.log(data,"fdkfdkfkasjkf");
     const newBook = await models.Book.create(data);
     return newBook;
   }
