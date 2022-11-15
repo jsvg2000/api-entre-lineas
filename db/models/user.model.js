@@ -1,12 +1,13 @@
-const {Model, DataTypes, Sequelize} = require('sequelize');
+const {Model, DataTypes} = require('sequelize');
 const {TYPEUSER_TABLE } = require('./type-user.models');
+
 
 const USER_TABLE = 'users';
 
 const UserSchema = {
   dni: {
     allowNull: true,
-    type: DataTypes.BIGINT(10),
+    type: DataTypes.INTEGER,
     unique:true
   },
   nombre: {
@@ -60,7 +61,7 @@ const UserSchema = {
   },
   contrasena: {
     allowNull: false,
-    type: DataTypes.STRING(20),
+    type: DataTypes.TEXT,
   },
   temasPreferencia: {
     field: 'temas_preferencia',
@@ -70,7 +71,7 @@ const UserSchema = {
   idTipoUsuario:{
     field: 'id_tipo_usuario',
     allowNull: false,
-    type: DataTypes.INTEGER(11),
+    type: DataTypes.INTEGER,
     reference:{
       model: TYPEUSER_TABLE,
       key:'idTipoUsuario'
@@ -90,9 +91,14 @@ const UserSchema = {
 }
 
 class User extends Model {
-  static associate() {
-    this.belongsTo(models.TypeUser,{
-      foreignKey:'idTipoUser', as: 'typeStore' });
+  static associate(models) {
+    this.belongsTo(models.TypeUser,{ foreignKey:'idTipoUsuario',as: 'typeUser' });
+    this.belongsToMany(models.Conversation, {
+      as: 'Conversation',
+      through: models.ConversationUser,
+      foreignKey: 'usuario',
+      otherKey: 'idConversacion'
+    });
   }
 
   static config(sequelize) {

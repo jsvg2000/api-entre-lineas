@@ -12,7 +12,7 @@ const service = new BookService();
 
 router.get('/',
 passport.authenticate('jwt',{session:false}),
-checkRoles(1,2),
+ checkRoles(1,2),
  async (req, res, next) => {
     try {
       const books = await service.find();

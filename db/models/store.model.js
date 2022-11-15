@@ -7,7 +7,7 @@ const StoreSchema = {
     field:"id_tienda",
     allowNull: false,
     autoIncrement: true,
-    type: DataTypes.INTEGER(11),
+    type: DataTypes.INTEGER,
     primaryKey: true
   },
   nombreTienda:{
@@ -23,12 +23,12 @@ const StoreSchema = {
   },
   horarios:{
     allowNull: false,
-    type: DataTypes.TEXT('long'),
+    type: DataTypes.TEXT,
   },
   direccion:{
     allowNull: false,
     autoIncrement: false,
-    type: DataTypes.TEXT('long'),
+    type: DataTypes.TEXT,
     field: 'anyo_publicacion'
   },
   pais:{
@@ -45,7 +45,20 @@ const StoreSchema = {
     allowNull: false,
     autoIncrement: false,
     type: DataTypes.STRING(100)
+  },
+  urlImagen:{
+    allowNull: false,
+    autoIncrement: false,
+    type: DataTypes.TEXT,
+    field: 'url_imagen'
+  },
+  urlMaps:{
+    allowNull: false,
+    autoIncrement: false,
+    type: DataTypes.TEXT,
+    field: 'url_maps'
   }
+
 }
 
 class Store extends Model{

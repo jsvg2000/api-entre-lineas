@@ -17,12 +17,26 @@ class UsersService {
   }
 
   async find() {
-    const rta = await models.User.findAll();
+    const rta = await models.User.findAll({
+      include:['typeUser']
+    });
     return rta;
   }
 
   async findOne(user) {
-    const usuario = await models.User.findByPk(user);
+    const usuario = await models.User.findByPk(user,{
+      include:['typeUser']
+    });
+    if(!usuario){
+      throw boom.notFound('User not found');
+    }
+    return usuario;
+  }
+
+  async findConversation(user) {
+    const usuario = await models.User.findByPk(user,{
+      include:['typeUser','Conversation']
+    });
     if(!usuario){
       throw boom.notFound('User not found');
     }

@@ -1,19 +1,24 @@
 const express = require('express');
-
+const passport = require('passport');
 const typeUserService = require('../services/type-user.service');
 const validatorHandler = require('../middlewares/validator.handler');
+const {checkRoles} = require('./../middlewares/auth.handler');
 const { createTypeUserSchema, updateTypeUserSchema, getTypeUserSchema } = require('../schemas/type-user.schema');
+
 
 const router = express.Router();
 const service = new typeUserService();
 
-router.get('/', async (req, res, next) => {
-  try {
-    const typeUser = await service.find();
-    res.json(typeUser);
-  } catch (error) {
-    next(error);
-  }
+router.get('/',
+//passport.authenticate('jwt',{session:false}),
+//checkRoles('Root'),
+ async (req, res, next) => {
+    try {
+      const typeUser = await service.find();
+      res.json(typeUser);
+    } catch (error) {
+      next(error);
+    }
 });
 
 router.get('/:idTipoUsuario',
@@ -30,6 +35,7 @@ router.get('/:idTipoUsuario',
 );
 
 router.post('/',
+
   validatorHandler(createTypeUserSchema, 'body'),
   async (req, res, next) => {
     try {

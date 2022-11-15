@@ -1,12 +1,12 @@
 const {Model, DataTypes,} = require('sequelize');
 
-const TYPEUSER_TABLE = 'tipo-usuario';
+const TYPEUSER_TABLE = 'type-user';
 
 const TypeUserSchema = {
   idTipoUsuario:{
     field:"id_tipo_usuario",
     allowNull: false,
-    type: DataTypes.INTEGER(5),
+    type: DataTypes.INTEGER,
     primaryKey: true
   },
   tipoUsuario:{

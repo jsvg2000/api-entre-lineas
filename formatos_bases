@@ -1,4 +1,4 @@
-["LIBROS":{
+["LIBROS":[{
   "issn": "9788497592208",
   "titulo": "Cien años de soledad",
   "autor": "Gabriel García Márquez",
@@ -13,25 +13,40 @@
   "urlImage": "https://cdn.agapea.com/Debolsillo/Cien-anos-de-soledad-i6n66640.jpg",
   "habilitado":"true",
   "idTienda":"1"
-},
+}],
 "Usarios":{
-  "dni": "1004995559",
-  "tipoUsuario": 1,
-  "nombre": "Juan Sebastián",
-  "apellidos": "Velásquez Guerrero",
-  "genero": "Máculino",
-  "fechaNacimiento": "2000-04-01T06:30:00.000Z",
+  "dni": 1004995559,
+  "nombre": "Juan Sebastian",
+  "apellidos": "Velasquez Guerero",
+  "fechaNacimiento": "2000-04-01",
+  "tipoDocumento": "1004995559",
+  "direccion": "KR 14 B 39-70",
   "pais": "Colombia",
   "departamento": "Risaralda",
-  "ciudad": "Santa Rosa De Cabal",
-  "direccion": "Kr 14 b 39-70",
-  "generoFavorito": "Drama",
+  "ciudad": "Santa Rosa de Cabal",
+  "genero": "Masculino",
   "correo": "juansebastian.velasquez@utp.edu.co",
-  "usuario": "jsvg2000",
-  "contrasena": "jsvg2000",
-  "suscripcionNoticias": true,
+  "usuario": "juan",
+  "temasPreferencia": "Poesía",
+  "idTipoUsuario": 3,
+  "suscripcionNoticias": false,
   "inhabilitar": false
 },
+"TipoUUSARIOS":[
+  {
+      "idTipoUsuario": 3,
+      "tipoUsuario": "Cliente"
+  },
+  {
+      "idTipoUsuario": 2,
+      "tipoUsuario": "Administrador"
+  },
+  {
+      "idTipoUsuario": 1,
+      "tipoUsuario": "Root"
+  }
+]
+,
 "TIENDAS":{
   "idTienda": "1",
   "nombreTienda": "Centro Comercial Cuidad Victoria",

@@ -12,7 +12,9 @@ class TypeUserService {
   }
 
   async find() {
-    const typeUser = await models.TypeUser.findAll();
+    const typeUser = await models.TypeUser.findAll({
+      include:['users']
+    });
     return typeUser;
   }
 

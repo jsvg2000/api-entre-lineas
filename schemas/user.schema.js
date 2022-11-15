@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const dni = Joi.number().integer().min(0).max(10);
+const dni = Joi.number().integer().min(0);
 const nombre = Joi.string().max(50);
 const apellidos = Joi.string().max(50);
 const fechaNacimiento = Joi.date();
@@ -12,7 +12,7 @@ const ciudad = Joi.string().max(50);
 const genero = Joi.string();
 const correo = Joi.string().email();
 const usuario = Joi.string();
-const contrasena = Joi.string().min(8);
+const contrasena = Joi.string();
 const temasPreferencia = Joi.string();
 const idTipoUsuario = Joi.number().integer();
 const suscripcionNoticias = Joi.boolean();
@@ -61,7 +61,7 @@ const updateUserSchema = Joi.object({
 });
 
 const getUserSchema = Joi.object({
-  dni: dni
+  usuario: usuario
 });
 
 module.exports = { createUserSchema, updateUserSchema, getUserSchema }

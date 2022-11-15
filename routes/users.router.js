@@ -3,6 +3,7 @@ const express = require('express');
 const UsersService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validator.handler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('./../schemas/user.schema');
+const passport = require('passport');
 
 const router = express.Router();
 const service = new UsersService();
@@ -15,6 +16,20 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
+
+
+router.get('/conversation',
+  passport.authenticate('jwt',{session:false}),
+  async (req, res, next) => {
+    try {
+      const user  = req.user;
+      const conversaciones = await service.findConversation(user.sub);
+      res.json(conversaciones);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 router.get('/:usuario',
   validatorHandler(getUserSchema, 'params'),

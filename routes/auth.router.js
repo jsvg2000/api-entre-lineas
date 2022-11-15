@@ -13,8 +13,8 @@ router.post('/login',
     try {
       const user =req.user;
       const payload={
-        sub: user.dni,
-        role: user.tipoUsuario
+        sub: user.usuario,
+        role: user.typeUser.tipoUsuario
       }
       const token = jwt.sign(payload,config.jwtSecret);
 
