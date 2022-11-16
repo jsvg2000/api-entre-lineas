@@ -7,7 +7,9 @@ const horarios= Joi.string();
 const direccion=Joi.string();
 const pais=Joi.string();
 const departamento=Joi.string();
-const cuidad=Joi.string();
+const cuidad =Joi.string();
+const urlImagen =Joi.string();
+const urlMaps =Joi.string();
 
 
 const createStoreSchema = Joi.object({
@@ -18,7 +20,9 @@ const createStoreSchema = Joi.object({
   direccion: direccion.required(),
   pais: pais.required(),
   departamento: departamento.required(),
-  cuidad: cuidad.required()
+  cuidad: cuidad.required(),
+  urlImagen:urlImagen.required(),
+  urlMaps:urlMaps.required()
 });
 
 const updateStoreSchema = Joi.object({
@@ -29,7 +33,9 @@ const updateStoreSchema = Joi.object({
   direccion: direccion,
   pais: pais,
   departamento: departamento,
-  cuidad: cuidad
+  cuidad: cuidad,
+  urlImagen:urlImagen,
+  urlMaps:urlMaps
 });
 
 const getStoreSchema = Joi.object({

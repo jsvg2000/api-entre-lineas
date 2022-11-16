@@ -9,11 +9,10 @@ const genero = Joi.string().min(0).max(50);
 const numeroPaginas = Joi.number().min(0);
 const editorial = Joi.string().min(0).max(50);
 const idioma = Joi.string().min(0).max(50);
-const estado = Joi.allow()
+const cantidad = Joi.number();
 const precio = Joi.number().min(0);
 const urlImage = Joi.string().min(0);
-const habilitado = Joi.allow();
-const idTienda = Joi.number().integer();
+const inhabilitado = Joi.allow();
 
 const createBookSchema = Joi.object({
   issn: issn.required(),
@@ -25,11 +24,10 @@ const createBookSchema = Joi.object({
   numeroPaginas: numeroPaginas.required(),
   editorial: editorial.required(),
   idioma: idioma.required(),
-  estado: estado.required(),
+  cantidad: cantidad.required(),
   precio: precio.required(),
   urlImage: urlImage.required(),
-  habilitado:habilitado.required(),
-  idTienda:idTienda.required()
+  inhabilitado:inhabilitado.required()
 });
 
 const updateBookSchema = Joi.object({
@@ -42,11 +40,10 @@ const updateBookSchema = Joi.object({
   numeroPaginas: numeroPaginas,
   editorial: editorial,
   idioma: idioma,
-  estado: estado,
+  cantidad: cantidad,
   precio: precio,
   urlImage: urlImage,
-  habilitado:habilitado,
-  idTienda:idTienda
+  inhabilitado:inhabilitado
 });
 
 const getBookSchema = Joi.object({

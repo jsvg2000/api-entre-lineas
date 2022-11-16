@@ -17,14 +17,21 @@ class StoreService {
   }
 
   async findOne(idTienda) {
-    const store = await models.Store.findByPk(idTienda,{
-      include:['books']
-    });
+    const store = await models.Store.findByPk(idTienda);
     if(!store){
       throw boom.notFound('store not found');
     }
     return store;
+  }
 
+  async findBook(idTienda) {
+    const store = await models.Store.findByPk(idTienda,{
+      include:['Book']
+    });
+    if(!store){
+      throw boom.notFound('Store not found');
+    }
+    return store;
   }
 
   async update(idTienda, changes) {

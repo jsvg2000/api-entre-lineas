@@ -12,14 +12,32 @@ class BookService {
   }
 
   async find() {
-    const rta = await models.Book.findAll({
-      include: ['store']
-    });
+    const rta = await models.Book.findAll();
     return rta;
   }
 
   async findOne(issn) {
     const book = await models.Book.findByPk(issn);
+    if(!book){
+      throw boom.notFound('Book not found');
+    }
+    return book;
+  }
+
+  async findStore(issn) {
+    const book = await models.Book.findByPk(issn,{
+      include:['Store']
+    });
+    if(!book){
+      throw boom.notFound('Book not found');
+    }
+    return book;
+  }
+
+  async findNotices(issn) {
+    const book = await models.Book.findByPk(issn,{
+      include:['notices']
+    });
     if(!book){
       throw boom.notFound('Book not found');
     }

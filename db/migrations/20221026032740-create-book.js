@@ -19,7 +19,6 @@ module.exports = {
   },
 
   async down (queryInterface) {
-
     await queryInterface.drop(CONVERSATIONUSER_TABLE);
     await queryInterface.drop(MESSAGE_TABLE);
     await queryInterface.drop(CONVERSATION_TABLE);

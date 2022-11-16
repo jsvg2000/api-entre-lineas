@@ -1,5 +1,4 @@
 const {Model, DataTypes,Sequelize} = require('sequelize');
-const {STORE_TABLE } = require('./store.model');
 const BOOK_TABLE = 'books';
 
 const BookSchema = {
@@ -20,9 +19,10 @@ const BookSchema = {
     type: DataTypes.STRING(50)
   },
   fechaPublicacion:{
-    allowNull: false,
-    type: DataTypes.DATE,
-    field: 'fecha_publicacion'
+    allowNull: true,
+    type: DataTypes.DATEONLY(),
+    field: 'fecha_publicacion',
+    defaultValue: DataTypes.NOW
   },
   anyoPublicacion:{
     allowNull: false,
@@ -51,10 +51,10 @@ const BookSchema = {
     autoIncrement: false,
     type: DataTypes.STRING(50)
   },
-  estado:{
+  cantidad:{
     allowNull: false,
     autoIncrement: false,
-    type: DataTypes.BOOLEAN
+    type: DataTypes.INTEGER
   },
   precio:{
     allowNull: false,
@@ -64,31 +64,29 @@ const BookSchema = {
   urlImage:{
     allowNull: false,
     autoIncrement: false,
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    field: 'url_image'
   },
-  habilitado:{
+  inhabilitado:{
     allowNull:true,
     type: DataTypes.BOOLEAN,
     defaultValue: true
-  },
-  idTienda:{
-    field: 'id_tienda',
-    allowNull: false,
-    type: DataTypes.INTEGER(11),
-    reference:{
-      model: STORE_TABLE,
-      key:'idTienda'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
   }
 }
 
 class Book extends Model{
 
   static associate(models){
-    this.belongsTo(models.Store,{
-      foreignKey:'idTienda', as: 'store' });
+    this.belongsToMany(models.Store, {
+      as: 'Store',
+      through: models.Exemplar,
+      foreignKey: 'issn',
+      otherKey: 'idTienda'
+    });
+    this.hasMany(models.Notices,{
+      as: 'notices',
+      foreignKey:'issn'
+    });
   }
 
   static config(sequelize){

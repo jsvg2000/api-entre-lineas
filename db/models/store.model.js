@@ -64,9 +64,11 @@ const StoreSchema = {
 class Store extends Model{
 
   static associate(models){
-    this.hasMany(models.Book,{
-      as: 'books',
-      foreignKey:'idTienda'
+    this.belongsToMany(models.Book, {
+      as: 'Book',
+      through: models.Exemplar,
+      foreignKey: 'idTienda',
+      otherKey: 'issn'
     });
   }
 
@@ -81,5 +83,3 @@ class Store extends Model{
 }
 
 module.exports = {STORE_TABLE, StoreSchema,Store}
-
-

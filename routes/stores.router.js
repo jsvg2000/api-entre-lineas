@@ -16,6 +16,19 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/book/:idTienda',
+  validatorHandler(getStoreSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { idTienda } = req.params;
+      const tienda = await service.findBook(idTienda);
+      res.json(tienda);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.get('/:idTienda',
   validatorHandler(getStoreSchema, 'params'),
   async (req, res, next) => {

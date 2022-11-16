@@ -11,8 +11,8 @@ const router = express.Router();
 const service = new BookService();
 
 router.get('/',
-passport.authenticate('jwt',{session:false}),
- checkRoles(1,2),
+  //passport.authenticate('jwt',{session:false}),
+ //checkRoles(1,2),
  async (req, res, next) => {
     try {
       const books = await service.find();
@@ -21,6 +21,32 @@ passport.authenticate('jwt',{session:false}),
       next(error);
     }
 });
+
+router.get('/store/:issn',
+  validatorHandler(getBookSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const {issn} = req.params;
+      const book = await service.findStore(issn);
+      res.json(book);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get('/notices/:issn',
+  validatorHandler(getBookSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const {issn} = req.params;
+      const book = await service.findNotices(issn);
+      res.json(book);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 router.get('/:issn',
   validatorHandler(getBookSchema, 'params'),
@@ -36,8 +62,8 @@ router.get('/:issn',
 );
 
 router.post('/',
-  passport.authenticate('jwt',{session:false}),
-  checkRoles(1,2),
+  //passport.authenticate('jwt',{session:false}),
+  //checkRoles(1,2),
   validatorHandler(createBookSchema, 'body'),
   async (req, res, next) => {
     try {
