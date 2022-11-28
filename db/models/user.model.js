@@ -99,6 +99,18 @@ class User extends Model {
       foreignKey: 'usuario',
       otherKey: 'idConversacion'
     });
+    this.belongsToMany(models.Target, {
+      as: 'Target',
+      through: models.HaveTarget,
+      foreignKey: 'usuario',
+      otherKey: 'numeroTarjeta'
+    });
+    this.belongsToMany(models.Buy, {
+      as: 'Buy',
+      through: models.BuyBook,
+      foreignKey: 'usuario',
+      otherKey: 'idCompra'
+    });
   }
 
   static config(sequelize) {

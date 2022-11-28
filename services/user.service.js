@@ -43,6 +43,26 @@ class UsersService {
     return usuario;
   }
 
+  async findBuy(user) {
+    const usuario = await models.User.findByPk(user,{
+      include:['Buy']
+    });
+    if(!usuario){
+      throw boom.notFound('User not found');
+    }
+    return usuario;
+  }
+
+  async findTarget(user) {
+    const usuario = await models.User.findByPk(user,{
+      include:['Target']
+    });
+    if(!usuario){
+      throw boom.notFound('Target User not found');
+    }
+    return usuario;
+  }
+
   async update(usuario, changes) {
     const user = await this.findOne(usuario);
     const rta = await user.update(changes);

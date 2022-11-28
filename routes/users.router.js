@@ -17,13 +17,38 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-
-router.get('/conversation',
-  passport.authenticate('jwt',{session:false}),
+router.get('/target/:usuario',
+  //passport.authenticate('jwt',{session:false}),
   async (req, res, next) => {
     try {
-      const user  = req.user;
-      const conversaciones = await service.findConversation(user.sub);
+      //const user  = req.user;
+      const { usuario } = req.params;
+      const conversaciones = await service.findTarget(usuario);
+      res.json(conversaciones);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get('/buy/:usuario',
+  validatorHandler(getUserSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const {usuario} = req.params;
+      const compra = await service.findBuy(usuario);
+      res.json(compra);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get('/conversation/:usuario',
+  async (req, res, next) => {
+    try {
+      const { usuario } = req.params;
+      const conversaciones = await service.findConversation(usuario);
       res.json(conversaciones);
     } catch (error) {
       next(error);

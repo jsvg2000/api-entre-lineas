@@ -83,6 +83,12 @@ class Book extends Model{
       foreignKey: 'issn',
       otherKey: 'idTienda'
     });
+    this.belongsToMany(models.Buy, {
+      as: 'Buy',
+      through: models.BuyBook,
+      foreignKey: 'issn',
+      otherKey: 'idCompra'
+    });
     this.hasMany(models.Notices,{
       as: 'notices',
       foreignKey:'issn'

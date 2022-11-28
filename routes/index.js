@@ -10,6 +10,12 @@ const messageRouter = require('./message.router');
 const conversationUserRouter = require('./conversation-user.router');
 const exemplarRouter = require('./exemplar.router');
 const noticesRouter = require('./notice.router');
+const typeTargetRouter = require('./type-target.router');
+const targetRouter = require('./target.router');
+const haveTargetRouter = require('./have-target.router');
+const stateBuyRouter = require('./state-buy-router');
+const buyRouter = require('./buy.router');
+const buyBookRouter = require('./buy-book.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -24,6 +30,12 @@ function routerApi(app) {
   router.use('/conversation-user', conversationUserRouter);
   router.use('/exemplar', exemplarRouter);
   router.use('/notices', noticesRouter);
+  router.use('/type-target',typeTargetRouter);
+  router.use('/target',targetRouter);
+  router.use('/have-target',haveTargetRouter);
+  router.use('/state-buy',stateBuyRouter);
+  router.use('/buy',buyRouter);
+  router.use('/buy-book',buyBookRouter);
 }
 
 module.exports = routerApi;
