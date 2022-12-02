@@ -6,7 +6,7 @@ const fecha= Joi.date();
 
 
 const createBuySchema = Joi.object({
-  idCompra: idCompra.required(),
+  idCompra: idCompra,
   idEstadoCompra: idEstadoCompra.required(),
   fecha: fecha
 });
