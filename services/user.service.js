@@ -53,6 +53,13 @@ class UsersService {
     return usuario;
   }
 
+  async findByEmail(correo) {
+    const rta = await models.User.findOne({
+      where: { correo }
+    });
+    return rta;
+  }
+
   async findTarget(user) {
     const usuario = await models.User.findByPk(user,{
       include:['Target']

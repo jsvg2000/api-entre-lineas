@@ -1,14 +1,16 @@
 const express = require('express');
-
+const passport = require('passport');
 const UsersService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validator.handler');
 const { createUserSchema, updateUserSchema, getUserSchema } = require('./../schemas/user.schema');
-const passport = require('passport');
-
 const router = express.Router();
 const service = new UsersService();
+const {checkRoles} = require('./../middlewares/auth.handler');
 
-router.get('/', async (req, res, next) => {
+router.get('/',
+passport.authenticate('jwt',{session:true}),
+checkRoles(1,2),
+async (req, res, next) => {
   try {
     const users = await service.find();
     res.json(users);

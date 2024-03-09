@@ -20,11 +20,11 @@ const buyBookRouter = require('./buy-book.router');
 function routerApi(app) {
   const router = express.Router();
   app.use('/api/v1', router);
+  router.use('/auth', authRouter);
   router.use('/books', booksRouter);
   router.use('/users', usersRouter);
   router.use('/stores', storesRouter);
   router.use('/type-user', typeUserRouter);
-  router.use('/auth', authRouter);
   router.use('/conversation', conversationRouter);
   router.use('/message', messageRouter);
   router.use('/conversation-user', conversationUserRouter);

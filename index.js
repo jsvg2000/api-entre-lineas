@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
 const {checkApiKey } = require('./middlewares/auth.handler');
-
+require('./utils/auth');
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler');
 
 const app = express();
@@ -23,10 +23,11 @@ const options = {
 }
 app.use(cors());
 
-require('./utils/auth');
+app.get('/',checkApiKey,(req,res)=>{
+  res.send('Hola mi server en express');
+})
 
 routerApi(app);
-
 app.use(logErrors);
 app.use(ormErrorHandler);
 app.use(boomErrorHandler);
