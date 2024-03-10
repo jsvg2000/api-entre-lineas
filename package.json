@@ -23,12 +23,15 @@
     "prettier": "^2.3.2"
   },
   "dependencies": {
+    "@apollo/server": "^4.10.1",
+    "@apollo/server-plugin-landing-page-graphql-playground": "^4.0.1",
     "@hapi/boom": "^9.1.4",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "faker": "^5.5.3",
+    "graphql": "^16.8.1",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
