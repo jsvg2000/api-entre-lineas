@@ -46,6 +46,8 @@ class AuthService {
     const token = jwt.sign(payload, config.jwtSecret,{expiresIn:'15min'});
     const link = `http://myfrontend.com/recovery?toke=${token}` ;
 
+    await service.update(user.usuario,{recoveryToken:token})
+
 
     const mail = {
       from: config.smtpEmail, // sender address
@@ -73,6 +75,25 @@ class AuthService {
     await transporter.sendMail(infoMail);
     return { message: 'mail sent' };
   }
+
+  async changePassword(token,newPassword){
+    try{
+      const payload = jwt.verify(token,config.jwtSecret);
+      const user = await service.findOne(payload.sub);
+      if(user.recoveryToken !== token){
+        throw boom.unauthorized();
+      }
+      const hash = await bcrypt.hash(newPassword,10);
+      await service.update(user.usuario,{recoveryToken:null,contrasena:hash})
+      return{message:'password changed'}
+
+    }catch(e){
+      throw boom.unauthorized();
+    }
+
+
+  }
+
 }
 
 module.exports = AuthService;

@@ -63,6 +63,11 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.TEXT,
   },
+  recoveryToken: {
+    field:'recovery_token',
+    allowNull: true,
+    type: DataTypes.TEXT,
+  },
   temasPreferencia: {
     field: 'temas_preferencia',
     allowNull: true,
